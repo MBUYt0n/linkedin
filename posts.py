@@ -1,16 +1,27 @@
 import random
 import time
-import math
+
 
 class Post:
     def __init__(self):
         self.time = time.time()
-        self.likes = 0
-        self.comments = 0
-        self.views = 0
-        self.quality = random.rand()
+        self.likes = random.randint(0, 50)
+        self.comments = random.randint(0, 25)
+        self.views = random.randint(0, 100)
+        self.quality = random.random()
 
     def inc_views(self):
-        ma
+        self.views += 1
+
+    def inc_likes(self):
+        self.likes += 1
+
+    def inc_comments(self):
+        self.comments += 1
 
 
+d = [Post() for i in range(10)]
+for i in d:
+    i.inc()
+    print(i.likes, i.comments, i.views)
+    print(i.quality)
