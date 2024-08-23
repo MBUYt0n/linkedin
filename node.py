@@ -8,12 +8,14 @@ class Node:
         self.posts = set()
         self.edges = []
         self.neighbours = set()
+        self.denom = 0
 
     def add_edge(self, user):
         if user not in self.neighbours and user != self.user:
             self.neighbours.add(user)
             weight = 1 / len(self.neighbours)
             self.edges.append((user, weight))
+            self.denom += 1
             self.edges = list(map(lambda x: (x[0], weight), self.edges))
 
     def read_edge(self, user, weight):
@@ -24,7 +26,7 @@ class Node:
         self.posts.add(post)
 
 
-def create_graph():
+def create_graph(path="data.json"):
     graph = [Node(i) for i in range(10)]
     for i in range(random.randint(30, 50)):
         user1 = random.randint(0, 9)
@@ -39,8 +41,9 @@ def create_graph():
             "posts": list(i.posts),
             "edges": i.edges,
             "neighbours": list(i.neighbours),
+            "denom": i.denom
         }
         d.append(obj)
 
-    with open("data.json", "w") as f:
+    with open(path, "w") as f:
         json.dump(d, f, indent=4)
