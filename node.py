@@ -24,22 +24,23 @@ class Node:
         self.posts.add(post)
 
 
-graph = [Node(i) for i in range(10)]
-for i in range(random.randint(30, 50)):
-    user1 = random.randint(0, 9)
-    user2 = random.randint(0, 9)
-    graph[user1].add_edge(user2)
-    graph[user2].add_edge(user1)
+def create_graph():
+    graph = [Node(i) for i in range(10)]
+    for i in range(random.randint(30, 50)):
+        user1 = random.randint(0, 9)
+        user2 = random.randint(0, 9)
+        graph[user1].add_edge(user2)
+        graph[user2].add_edge(user1)
 
-d = []
-for i in graph:
-    obj = {
-        "user": i.user,
-        "posts": list(i.posts),
-        "edges": i.edges,
-        "neighbours": list(i.neighbours),
-    }
-    d.append(obj)
+    d = []
+    for i in graph:
+        obj = {
+            "user": i.user,
+            "posts": list(i.posts),
+            "edges": i.edges,
+            "neighbours": list(i.neighbours),
+        }
+        d.append(obj)
 
-with open("data.json", "w") as f:
-    json.dump(d, f, indent=4)
+    with open("data.json", "w") as f:
+        json.dump(d, f, indent=4)
