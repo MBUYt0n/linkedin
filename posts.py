@@ -6,20 +6,20 @@ class Post:
     def __init__(self, user):
         self.user = user
         self.time = time.time()
-        self.likes = []
-        self.comments = []
-        self.views = []
+        self.likes = set()
+        self.comments = set()
+        self.views = set()
         self.quality = random.random()
 
     def inc_views(self, user):
-        for u in list(set(user)):
-            self.views.append(u)
+        for u in user:
+            self.views.add(u)
 
     def inc_likes(self, user):
-        for u in list(set(user)):
-            self.likes.append(u)
+        for u in user:
+            self.likes.add(u)
 
     def inc_comments(self, user):
-        for u in list(set(user)):
-            self.comments.append(u)
+        for u in user:
+            self.comments.add(u)
 
