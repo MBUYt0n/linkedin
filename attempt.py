@@ -4,8 +4,8 @@ from posts import Post
 import random
 import node
 
-g = utils.read_graph("data2.json")
-po = [Post(random.randint(0, 99)) for i in range(50)]
+g = utils.read_graph("depracated/data2.json")
+po = [Post(random.randint(0, 99)) for i in range(500)]
 
 
 def new_avg(avg, count, value):
@@ -86,12 +86,5 @@ for p in po:
         print(p.user)
     op = p.user
     propagate(op, 0, p)
-    print(f"Post user: {p.user}")
-    print(f"Post likes: {p.likes}")
-    print(f"Post comments: {p.comments}")
 
-# for i in g:
-#     for j in i.posts:
-#         print(i.posts[j].likes)
-#         print(i.posts[j].comments)
 node.create_graph(True, graph=g, path="data1.json")
