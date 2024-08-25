@@ -5,10 +5,12 @@ import random
 class Node:
     def __init__(self, user):
         self.user = user
-        self.posts = set()
+        self.posts = {}
         self.edges = []
         self.neighbours = set()
         self.denom = 0
+        self.avg = 0
+        self.count = 0
 
     def add_edge(self, user):
         if user not in self.neighbours and user != self.user:
@@ -23,25 +25,37 @@ class Node:
         self.edges.append((user, weight))
 
     def add_post(self, post):
-        self.posts.add(post)
+        self.posts[post.id] = post
 
 
-def create_graph(path="data.json"):
-    graph = [Node(i) for i in range(10)]
-    for i in range(random.randint(30, 50)):
-        user1 = random.randint(0, 9)
-        user2 = random.randint(0, 9)
-        graph[user1].add_edge(user2)
-        graph[user2].add_edge(user1)
+def create_graph(existing=False, graph=None, path="data.json", n=None):
+    if not existing:
+        graph = [Node(i) for i in range(n)]
+        for i in range(random.randint(n * 3, n * 5)):
+            user1 = random.randint(0, n - 1)
+            user2 = random.randint(0, n - 1)
+            graph[user1].add_edge(user2)
+            graph[user2].add_edge(user1)
 
     d = []
     for i in graph:
         obj = {
             "user": i.user,
-            "posts": list(i.posts),
+            "posts": {
+                j.id: {
+                    "time": j.time,
+                    "likes": list(j.likes),
+                    "comments": list(j.comments),
+                    "views": list(j.views),
+                    "quality": j.quality,
+                }
+                for j in i.posts
+            },
             "edges": i.edges,
             "neighbours": list(i.neighbours),
-            "denom": i.denom
+            "denom": i.denom,
+            "average" : i.avg,
+            "count" : i.count
         }
         d.append(obj)
 

@@ -10,6 +10,7 @@ class Post:
         self.comments = set()
         self.views = set()
         self.quality = random.random()
+        self.id = random.randint(0, 1000000)
 
     def inc_views(self, user):
         for u in user:
@@ -22,4 +23,3 @@ class Post:
     def inc_comments(self, user):
         for u in user:
             self.comments.add(u)
-

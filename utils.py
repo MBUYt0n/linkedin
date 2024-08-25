@@ -4,13 +4,13 @@ import networkx as nx
 import matplotlib.pyplot as plt
 
 
-def read_graph():
-    with open("data.json", "r") as f:
+def read_graph(path):
+    with open(path, "r") as f:
         data = json.load(f)
 
     graph = [Node(i["user"]) for i in data]
     for i, j in zip(graph, data):
-        i.posts = set(j["posts"])
+        i.posts = j["posts"]
         i.neighbours = set(j["neighbours"])
         i.denom = j["denom"]
 
