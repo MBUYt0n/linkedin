@@ -13,6 +13,7 @@ def read_graph(path):
         i.posts = j["posts"]
         i.neighbours = set(j["neighbours"])
         i.denom = j["denom"]
+        i.avg = j["average"]
 
     for i in range(len(data)):
         for j in data[i]["edges"]:
