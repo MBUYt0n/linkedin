@@ -24,21 +24,23 @@ def feedback(centre, act, q):
 
 
 def propagate(centre, level, post):
+    print(f"Centre: {centre}")
+    print(f"Level: {level}")
     likes, commenter = choose(centre, post)
     if level == 3:
-        changes(p, centre, likes, commenter)
+        changes(post, centre, likes, commenter)
     elif len(likes) != 0:
-        changes(p, centre, likes, commenter)
-        feedback(centre, likes, p.quality)
+        changes(post, centre, likes, commenter)
+        feedback(centre, likes, post.quality)
         for i in likes:
-            propagate(i[0], level + 1, p)
+            propagate(i[0], level + 1, post)
     elif len(commenter) != 0:
-        changes(p, centre, likes, commenter)
-        feedback(centre, commenter, p.quality)
+        changes(post, centre, likes, commenter)
+        feedback(centre, commenter, post.quality)
         for i in commenter:
-            propagate(i[0], level + 1, p)
+            propagate(i[0], level + 1, post)
     else:
-        changes(p, centre, likes, commenter)
+        changes(post, centre, likes, commenter)
 
 
 def qual(neighbours, quality):
@@ -51,11 +53,15 @@ def choose(centre, post):
     k = random.randint(0, (len(neighbours) - 1))
     likes1 = neighbours[:k]
     likes2 = qual(neighbours, post.quality)
+    if len(likes2) == 0:
+        likes2 = neighbours
     likes = list(set(likes1).intersection(set(likes2)))
 
     k1 = random.randint(0, (len(neighbours) - 1) // 2)
     commenter1 = neighbours[:k1]
     commenter2 = qual(neighbours, post.quality)
+    if len(commenter2) == 0:
+        commenter2 = neighbours
     commenter = list(set(commenter1).intersection(set(commenter2)))
     return likes, commenter
 
@@ -81,12 +87,11 @@ for p in po:
     op = p.user
     propagate(op, 0, p)
     print(f"Post user: {p.user}")
-    print(f"Post views: {p.views}")
     print(f"Post likes: {p.likes}")
     print(f"Post comments: {p.comments}")
 
-for i in g:
-    for j in i.posts:
-        print(i.posts[j].likes)
-        print(i.posts[j].comments)
+# for i in g:
+#     for j in i.posts:
+#         print(i.posts[j].likes)
+#         print(i.posts[j].comments)
 node.create_graph(True, graph=g, path="data1.json")

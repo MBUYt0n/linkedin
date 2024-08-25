@@ -42,12 +42,12 @@ def create_graph(existing=False, graph=None, path="data.json", n=None):
         obj = {
             "user": i.user,
             "posts": {
-                j.id: {
-                    "time": j.time,
-                    "likes": list(j.likes),
-                    "comments": list(j.comments),
-                    "views": list(j.views),
-                    "quality": j.quality,
+                j: {
+                    "time": i.posts[j].time,
+                    "likes": list(i.posts[j].likes),
+                    "comments": list(i.posts[j].comments),
+                    "views": list(i.posts[j].views),
+                    "quality": i.posts[j].quality,
                 }
                 for j in i.posts
             },
